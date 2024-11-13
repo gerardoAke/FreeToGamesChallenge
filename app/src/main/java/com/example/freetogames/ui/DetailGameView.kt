@@ -1,6 +1,7 @@
 package com.example.freetogames.ui
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.freetogames.viewModels.DetailGameViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 
 @Composable
 fun DetailGameView(
@@ -106,6 +108,7 @@ fun DetailGameView(
             Button(
                 onClick = {
                     viewModel.updateToBd()
+                    viewModel.showToast("Changes applied")
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -117,6 +120,7 @@ fun DetailGameView(
                 onClick = {
                     viewModel.removeGame()
                     navController.popBackStack()
+                    viewModel.showToast("Game removed")
                 },
                 modifier = Modifier
                     .fillMaxWidth()
