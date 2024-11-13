@@ -1,8 +1,6 @@
 package com.example.freetogames.data
 
-import androidx.datastore.core.DataStore
 import com.example.freetogames.data.local.database.games.GameDao
-import com.example.freetogames.data.local.database.games.GameEntity
 import com.example.freetogames.domain.models.Game
 import com.example.freetogames.domain.IGameRepository
 import javax.inject.Inject
@@ -29,9 +27,16 @@ class GameRepositoryService @Inject constructor(
         return response
     }
 
-    override suspend fun getGameById(): Game {
-        gameDao.get
-        return
+    override suspend fun getGameById(id: Int): Game {
+        return gameDao.getById(id).toDomain()
+    }
+
+    override suspend fun update(game: Game) {
+        gameDao.update(game.toGameEntity())
+    }
+
+    override suspend fun delete(game: Game) {
+        gameDao.delete(game.toGameEntity())
     }
 
 

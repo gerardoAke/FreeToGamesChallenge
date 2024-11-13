@@ -9,8 +9,6 @@ import com.example.freetogames.domain.IGameRepository
 import com.example.freetogames.domain.models.Game
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,32 +17,35 @@ class DetailGameViewModel @Inject constructor(
     private val repository: IGameRepository
 ): ViewModel() {
 
-    private val _game = mutableStateOf(
-        Game(
-            title = "Tarisland",
-            thumbnail = "https://www.freetogame.com/g/582/thumbnail.jpg",
-            shortDescription = "A cross-platform MMORPG developed by Level Infinite and Published by Tencent.",
-            gameUrl = "https://www.freetogame.com/open/tarisland",
-            genre = "MMORPG",
-            platform = "PC (Windows)",
-            publisher = "Tencent",
-            developer = "Level Infinite",
-            releaseDate = "2024-06-22",
-            freeToGameProfileUrl = "https://www.freetogame.com/tarisland",
-            id = 0
-        )
-    )
+    private val _game = mutableStateOf<Game?>(null)
 
-    val game: State<Game> = _game
+    val game: State<Game?> = _game
+
+    fun getGameById(id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = repository.getGameById(id)
+             _game.value = result
+            Log.e("GAME", result.toString())
+        }
+    }
 
     fun updateGame(updatedGame: Game) {
         _game.value = updatedGame
     }
 
+    fun updateToBd() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _game.value?.let { repository.update(it) }
+            Log.i("GAME_UPDATED", _game.value.toString())
+        }
+    }
+
     fun removeGame() {
-        // Logic to remove game (e.g., delete from repository or navigate away)
-        _game.value = Game(
-            0, "", "", "", "", "", "", "", "", "",  ""
-        )
+        viewModelScope.launch(Dispatchers.IO) {
+            _game.value?.let {
+                Log.i("GAME_TO_BE_DELETED", _game.value.toString())
+                repository.delete(it)
+            }
+        }
     }
 }

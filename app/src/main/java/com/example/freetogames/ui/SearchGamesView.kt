@@ -1,5 +1,6 @@
 package com.example.freetogames.ui
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -11,7 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,9 +31,16 @@ import com.example.freetogames.domain.models.Game
 
 @Composable
 fun SearchGamesView(navController: NavHostController, viewModel: SearchGamesViewModel = hiltViewModel()) {
-    val games by viewModel.games.collectAsState()
+
+    val games = remember { viewModel.games }
+
+    LaunchedEffect(true)
+    {
+        viewModel.getGames()
+    }
 
     GameListScreenWithFilters(games) { id ->
+        Log.e("GAME_ID", id.toString())
         navController.navigate("detail_screen/$id")
     }
 }
@@ -171,12 +179,7 @@ fun SearchBar(query: String, onQueryChanged: (String) -> Unit) {
             .fillMaxWidth()
             .padding(8.dp),
         singleLine = true,
-        shape = RoundedCornerShape(8.dp),
-//        colors = TextFieldDefaults.textFieldColors(
-//            containerColor = MaterialTheme.colorScheme.surface,
-//            focusedIndicatorColor = Color.Transparent,
-//            unfocusedIndicatorColor = Color.Transparent
-//        )
+        shape = RoundedCornerShape(8.dp)
     )
 }
 

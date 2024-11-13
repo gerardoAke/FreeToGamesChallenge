@@ -12,8 +12,8 @@ interface GameDao {
     suspend fun getAll() : List<GameEntity>
     @Query("select * from games where title like '%'||:title||'%'")
     suspend fun getByTitle(title: String) : List<GameEntity>
-    @Query("select * from games where title like '%'||:title||'%'")
-    suspend fun getById(title: String) : List<GameEntity>
+    @Query("select * from games where id = :id")
+    suspend fun getById(id: Int) : GameEntity
     @Delete
     suspend fun delete(gameEntity: GameEntity)
     @Insert

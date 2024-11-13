@@ -63,17 +63,18 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation(libs.gson.converter)
-    implementation(libs.androidx.datastore)
-    implementation(libs.javax.inject)
-    implementation(libs.hilt.android)
-    implementation(libs.hilt.navigation.compose)
-    kapt(libs.hilt.android.compiler)
+    implementation(libs.gson.converter) // api
+    implementation(libs.androidx.datastore) // delte
+    implementation(libs.javax.inject) //
+    implementation(libs.hilt.android) // IoC container of Android
+    implementation(libs.hilt.navigation.compose) // Inject viewmodel
+    kapt(libs.hilt.android.compiler) //
 
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
     implementation(libs.coil.compose)
+    // implementation(libs.accompanist.navigation.animation)
 
     kapt(libs.androidx.room.compiler)
 
