@@ -1,4 +1,4 @@
-# Aplicación Android para Juegos Gratis
+# Aplicación Android para visualizar juegos gratis
 
 Este repositorio contiene una aplicación nativa de Android diseñada para visualizar videojuegos gratuitos.
 
